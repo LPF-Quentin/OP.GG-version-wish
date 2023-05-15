@@ -1,0 +1,32 @@
+.mastery1{
+    display: block;
+    text-align: center;
+}
+
+.mastery1 #lvlMastery1 {
+    display: flex;
+    justify-content: center;
+}
+
+.mastery2{
+    display: block;
+    text-align: center;
+}
+
+.mastery2 #lvlMastery2 {
+    display: flex;
+    justify-content: center;
+}
+
+.mastery3{
+    display: block;
+    text-align: center;
+}
+
+.mastery3 #lvlMastery3 {
+    display: flex;
+    justify-content: center;
+}
+.mast {
+    
+}
