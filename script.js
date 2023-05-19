@@ -8,7 +8,7 @@
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
-const APIKey = `RGAPI-9071850e-ea33-4cf7-9e26-3faaedfda017`;
+const APIKey = ``;
 
 const getData = async (url) => {
     const response = await fetch(url);
