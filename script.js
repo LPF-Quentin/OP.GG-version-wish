@@ -8,7 +8,7 @@
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
-const APIKey = `//votre cle API ici`;
+const APIKey = `RGAPI-9071850e-ea33-4cf7-9e26-3faaedfda017`;
 
 const getData = async (url) => {
     const response = await fetch(url);
@@ -31,7 +31,6 @@ function replaceName(){
     .then(data => {
         traitementDesDonnées(data);
         showIcon(data)
-        //takeMasterys()
     })
     
     .catch(err => console.log("rejected\n", err.message))
@@ -41,13 +40,15 @@ function traitementDesDonnées(data) {
     let name = data.name;
     let level = data.summonerLevel;
     let revisionDate = data.revisionDate;
-    let sumId = data.id;    
+    sumId = data.id;    
     let icone = data.profileIconId;
+    let puuid = data.puuid;
     //console.log(name);
     // console.log(icone);
     // console.log(level);
     // console.log(revisionDate);
     // console.log(sumId);
+    // console.log(puuid);
     
     document.getElementById("name").innerHTML = "mon pseudo est : " + name;
     //document.getElementById("icone").innerHTML = "voici mon icone d'invoquateur : " + icone;
@@ -56,6 +57,8 @@ function traitementDesDonnées(data) {
     takeMasterys(sumId)
     showIcon(icone)
 }
+
+
 
 function showIcon(icone) {
     if (icone >= 0 && icone <= 5754) {
@@ -82,10 +85,10 @@ function takeMasterys(sumId){
     .then(data2 => {
         showMasterys(data2);
         // console.log("i");
+        statRank()
     })
     
     .catch(err => console.log("rejected\n", err.message))
-    console.log(sumId);
 }
 
 
@@ -132,7 +135,7 @@ function showMasterys(data2){
 
 const getData3 = async (url) => {
     const response = await fetch(url);
-    
+
     if (response.status != 200) {
         throw new Error("Cannot fetch the data.");
     }
@@ -141,16 +144,43 @@ const getData3 = async (url) => {
     return data3;
 }
 
-function statRank(sumId){
+
+function statRank(){
     getData3(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${sumId}?api_key=${APIKey}`)
     .then(data3 => {
-        takeStat(data3)
+        takeStatSolo(data3)
     })
     
     .catch(err => console.log("rejected\n", err.message))
-    console.log(sumId);
 }
 
-function takeStat(data3) {
-    console.log(data3);
+function takeStatSolo(data3) {
+    let rank = data3[0].tier
+    let division = data3[0].rank
+    let name = data3[0].summonerName
+    let win = data3[0].wins
+    let lose = data3[0].losses
+    let winRate = (win / (win + lose)) * 100
+    let LP = data3[0].leaguePoints
+    let leagueId = data3[0].leagueId
+    console.log(rank);
+    console.log(division);
+    console.log(LP + " LP");
+    console.log(name);
+    console.log(win);
+    console.log(lose);
+    console.log("leagueId : " + leagueId);
+    console.log(winRate);
+
+    document.getElementById("rank").innerHTML = rank + " " + division
 }
+
+
+
+
+
+
+
+
+
+//https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/FT3s2nafBqWZ9Arkgy5MkfIooy7SZ-p1bx9moQEMHUsEADIzA4sR24W0ehFkExFHLd3O0MgJ2x0GXQ/ids?start=0&count=100&api_key=RGAPI-9071850e-ea33-4cf7-9e26-3faaedfda017
