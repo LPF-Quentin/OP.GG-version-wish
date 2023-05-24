@@ -8,7 +8,6 @@
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
-import { APIKey } from "./config.js";
 
 
 
