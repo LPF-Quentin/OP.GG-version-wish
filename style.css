@@ -18,7 +18,7 @@
     justify-content: center;
 }
 
-.mastery3{
+.mastery3 {
     display: block;
     text-align: center;
 }
@@ -27,6 +27,22 @@
     display: flex;
     justify-content: center;
 }
-.mast {
-    
+
+/* #champIcon3 img {
+    border-radius: 60px;
+} */
+
+.icone #rankIMGSolo img {
+    position: relative;
+    width: 400px;
+}
+
+.icone #rankIMGFlex img {
+    position: relative;
+    width: 400px;
+}
+
+.icone #iconePlayer img{
+    border-radius: 50px;
+    width: 200px;
 }

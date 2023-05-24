@@ -8,7 +8,9 @@
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
 // ATTENTION LA CLE API SE PERIMME AU BOUT DE 24H!!!!!!!!!
-const APIKey = ``;
+import { APIKey } from "./config.js";
+
+
 
 const getData = async (url) => {
     const response = await fetch(url);
@@ -47,8 +49,8 @@ function traitementDesDonnées(data) {
     // console.log(icone);
     // console.log(level);
     // console.log(revisionDate);
-    // console.log(sumId);
-    // console.log(puuid);
+    console.log(sumId);
+    console.log(puuid);
     
     document.getElementById("name").innerHTML = "mon pseudo est : " + name;
     //document.getElementById("icone").innerHTML = "voici mon icone d'invoquateur : " + icone;
@@ -132,7 +134,6 @@ function showMasterys(data2){
 }
 
 
-
 const getData3 = async (url) => {
     const response = await fetch(url);
 
@@ -148,36 +149,155 @@ const getData3 = async (url) => {
 function statRank(){
     getData3(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${sumId}?api_key=${APIKey}`)
     .then(data3 => {
-        takeStatSolo(data3)
+       statSolo(data3)
+       statFlex(data3)
+    //    statSolo2(data3)
     })
     
     .catch(err => console.log("rejected\n", err.message))
 }
 
+
+function statSolo(data3){
+    //console.log(data3);
+    if (data3[0].queueType == "RANKED_SOLO_5x5")
+        takeStatSolo(data3)
+        // console.log("solo");
+    else if (data3[1].queueType == "RANKED_FLEX_SR")
+        takeStatFlex(data3)
+        // console.log("flex");
+}
+
+// function statSolo2 (data3) {
+//     if(data3[0].queueType == "RANKED_SOLO_5x5" && data3[1].queueType == "RANKED_FLEX_SR")
+//         takeStatSolo(data3)
+//     else if (data3[1].queueType == "RANKED_SOLO_5x5" && data3[0].queueType == "RANKED_FLEX_SR")
+//         takeStatFlex(data3)
+// }
+
 function takeStatSolo(data3) {
+    let solo = ""
     let rank = data3[0].tier
     let division = data3[0].rank
-    let name = data3[0].summonerName
     let win = data3[0].wins
     let lose = data3[0].losses
     let winRate = (win / (win + lose)) * 100
     let LP = data3[0].leaguePoints
-    let leagueId = data3[0].leagueId
-    console.log(rank);
-    console.log(division);
-    console.log(LP + " LP");
-    console.log(name);
-    console.log(win);
-    console.log(lose);
-    console.log("leagueId : " + leagueId);
-    console.log(winRate);
+    
+    winRate = winRate.toPrecision(4)
 
-    document.getElementById("rank").innerHTML = rank + " " + division
+    if (data3[0].queueType == "RANKED_SOLO_5x5")
+        solo = "Classé solo"
+    // else if (data3[1].queueType == "RANKED_SOLO_5x5")
+    //     solo = "Classé solo"
+
+    document.getElementById("rankIMGSolo").innerHTML = "<img src=\"embleme_rank/emblem-" + rank + ".png\">";
+    document.getElementById("classementSolo").innerHTML = rank + " " + division
+    document.getElementById("lpSolo").innerHTML = LP +" LP"
+    document.getElementById("winrateSolo").innerHTML = winRate + " %"
+    document.getElementById("typeSolo").innerHTML = solo
 }
 
 
 
+function statFlex(data3){
+    if (data3[0].queueType == "RANKED_FLEX_SR")
+        takeStatFlex(data3)
+    else if (data3[1].queueType == "RANKED_FLEX_SR")
+        takeStatFlex(data3)
+}
 
+function takeStatFlex(data3) {
+    let flex = ""
+    let rank = data3[1].tier
+    let division = data3[1].rank
+    let win = data3[1].wins
+    let lose = data3[1].losses
+    let winRate = (win / (win + lose)) * 100
+    let LP = data3[1].leaguePoints
+    
+    winRate = winRate.toPrecision(4)
+
+    if (data3[0].queueType == "RANKED_FLEX_SR")
+        flex = "Classé flexible"
+    // else if (data3[1].queueType == "RANKED_FLEX_SR")
+    //     flex = "Classé flexible"
+
+    document.getElementById("rankIMGFlex").innerHTML = "<img src=\"embleme_rank/emblem-" + rank + ".png\">";
+    document.getElementById("classementFlex").innerHTML = rank + " " + division
+    document.getElementById("lpFlex").innerHTML = LP +" LP"
+    document.getElementById("winrateFlex").innerHTML = winRate + " %"
+    document.getElementById("typeFlex").innerHTML = flex
+}
+
+// function takeStatFlex(data3){
+//     console.log("flex");
+//     //console.log(data3[0].rank);
+
+// // console.log(data3[1], data3[0]);
+// }
+
+
+
+
+
+
+// document.getElementById("rank").innerHTML = rank + " " + division
+// document.getElementById("winrate").innerHTML = winRate + "%"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function typeQueue(data3) {
+//     let solo;
+//     let flex;
+//     if (data3[0].queueType == "RANKED_SOLO_5x5")
+//         return solo
+//     else 
+//         return flex
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function getStats(item) {
+//     let rank = item.tier
+//     let division = item.rank
+//     let name = item.summonerName
+//     const win = item.wins
+//     const lose = item.losses
+//     let winRate = (win / (win + lose)) * 100
+//     const LP = item.leaguePoints
+//     const leagueId = item.leagueId
+    
+//     winRate = winRate.toPrecision(4)
+//     document.getElementById("rankIMG").innerHTML = "<img src=\"embleme_rank/emblem-" + rank + ".png\">"
+
+// }
+
+
+
+// getStats(item)
 
 
 
